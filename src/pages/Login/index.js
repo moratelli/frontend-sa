@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useHistory,
+  useLocation,
+  Link,
 } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
@@ -16,12 +18,19 @@ import { login } from '../../services/auth';
 import './styles.css';
 
 const Login = () => {
-  // const { from } = useParams();
+  const location = useLocation();
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (location.state?.missingAuth) {
+      setShowError(true);
+      setErrorMessage('É necessário se autenticar para acessar o sistema!');
+    }
+  }, [location]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -68,15 +77,6 @@ const Login = () => {
                   </Alert>
                 </div>
               </Collapse>
-              {/* {showError && (
-              <Alert
-                variant="danger"
-                dismissible
-                onClose={() => setShowError(false)}
-              >
-                {errorMessage}
-              </Alert>
-              )} */}
               <Form.Group>
                 <Form.Control
                   type="email"
@@ -105,7 +105,7 @@ const Login = () => {
               </Form.Group>
             </Form>
             <footer className="text-center">
-              <a href="/register">Não possui uma conta?</a>
+              <Link to="/register">Não possui uma conta?</Link>
             </footer>
           </section>
         </Col>

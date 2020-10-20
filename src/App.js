@@ -27,7 +27,7 @@ const App = () => (
           render={(props) => (
             isAuthenticated()
               ? <Dashboard />
-              : <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+              : <Redirect to={{ pathname: '/', state: { missingAuth: true } }} />
           )}
         />
       </Switch>
