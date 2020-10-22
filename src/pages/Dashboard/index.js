@@ -1,29 +1,36 @@
-import React from 'react';
-import {
-  useHistory,
-} from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
+import React from "react";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import { withRouter } from "react-router";
+import Sidebar from "../../components/sidebar.js";
 
-import './styles.css';
-import { logout } from '../../services/auth';
+import { useHistory } from "react-router-dom";
 
-const Dashboard = () => {
+import "./styles.css";
+import { logout } from "../../services/auth";
+
+const Dash = (props) => {
   const history = useHistory();
 
   const handleLogout = () => {
     logout();
-    history.push('/');
+    history.push("/");
   };
 
   return (
-    <Container fluid id="dashboard-container">
-      <h1>Você está logado</h1>
-      <Button onClick={handleLogout}>
-        Logout
-      </Button>
-    </Container>
+    <>
+      <Container fluid id="dashboard-container">
+        <Row>
+          <Col xs={2} id="sidebar-wrapper">
+            <Sidebar />
+          </Col>
+          <Col xs={10} id="page-content-wrapper">
+            <h1>Você está logado</h1>
+            <Button onClick={handleLogout}>Logout</Button>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
-
+const Dashboard = withRouter(Dash);
 export default Dashboard;
