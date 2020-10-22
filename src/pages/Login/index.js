@@ -12,8 +12,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 
-// import api from '../../services/api';
-import { login } from '../../services/auth';
+import api from '../../services/api';
+import { login, setUserData } from '../../services/auth';
 
 import './styles.css';
 
@@ -40,9 +40,11 @@ const Login = () => {
       setErrorMessage('Preencha todos os campos para continuar!');
     } else {
       try {
-        // const response = await api.post('/login', { email, password });
-        // login(response.data.token);
-        login('tokenficticio');
+        const response = await api.post('/api/auth/login', { username: email, password });
+        login(response.data.accessToken);
+        setUserData({
+          userId: response.data.id,
+        });
         history.push('/dashboard');
       } catch (err) {
         setShowError(true);

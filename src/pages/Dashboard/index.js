@@ -1,36 +1,48 @@
-import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { withRouter } from "react-router";
-import Sidebar from "../../components/sidebar.js";
+import React from 'react';
+import {
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-import { useHistory } from "react-router-dom";
+import './styles.css';
+import Sidebar from '../../components/Sidebar/index';
+import Create from '../Create';
+import Show from '../Show';
 
-import "./styles.css";
-import { logout } from "../../services/auth";
-
-const Dash = (props) => {
+const Dashboard = () => {
   const history = useHistory();
+  const location = useLocation();
+  const [path] = location.search.split('=');
 
-  const handleLogout = () => {
-    logout();
-    history.push("/");
-  };
+  let content;
+
+  switch (path) {
+    case '?show':
+      content = <Show />;
+      break;
+    case '?create':
+      content = <Create />;
+      break;
+    default:
+      history.push({ pathname: '/dashboard', search: '?show' });
+  }
 
   return (
-    <>
-      <Container fluid id="dashboard-container">
-        <Row>
-          <Col xs={2} id="sidebar-wrapper">
-            <Sidebar />
-          </Col>
-          <Col xs={10} id="page-content-wrapper">
-            <h1>Você está logado</h1>
-            <Button onClick={handleLogout}>Logout</Button>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Container fluid id="dashboard-container">
+      <Row>
+        <Col xs={2} id="sidebar-wrapper">
+          <Sidebar />
+        </Col>
+        <Col xs={10} id="page-content-wrapper">
+          {content}
+        </Col>
+      </Row>
+
+    </Container>
   );
 };
-const Dashboard = withRouter(Dash);
+
 export default Dashboard;

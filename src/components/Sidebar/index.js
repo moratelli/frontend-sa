@@ -1,17 +1,16 @@
-import React from "react";
-import { Nav, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import "../pages/Dashboard/styles.css";
+import React from 'react';
+import { Nav, Button } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
+import '../../pages/Dashboard/styles.css';
 
-import { useHistory } from "react-router-dom";
-import { logout } from "../services/auth";
+import { logout } from '../../services/auth';
 
-const Sidebar = (props) => {
+const Sidebar = () => {
   const history = useHistory();
 
   const handleLogout = () => {
     logout();
-    history.push("/");
+    history.push('/');
   };
 
   return (
@@ -21,26 +20,26 @@ const Sidebar = (props) => {
         activeKey="/home"
         onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
       >
-        <div className="sidebar-sticky"></div>
+        <div className="sidebar-sticky" />
 
         <Nav.Item>
-          <Nav.Link>
-            <Link to="/dashboard?show">Perfil</Link>
+          <Nav.Link as={Link} to="/dashboard?show">
+            Perfil
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link>
-            <Link to="/dashboard?show">Home</Link>
+          <Nav.Link as={Link} to="/dashboard?show">
+            Home
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link>
-            <Link to="/dashboard?show">Relatórios</Link>
+          <Nav.Link as={Link} to="/dashboard?show">
+            Relatórios
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link>
-            <Link to="/dashboard?create">Criar</Link>
+          <Nav.Link as={Link} to="/dashboard?create">
+            Criar
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
