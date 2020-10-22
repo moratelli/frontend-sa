@@ -39,11 +39,14 @@ const Login = () => {
       setShowError(true);
       setErrorMessage('Preencha todos os campos para continuar!');
     } else {
+      console.log(email === 'a@a.com' && password === 'a', email, password);
       if (email === 'a@a.com' && password === 'a') {
         login('token');
         setUserData({
           userId: 1,
         });
+
+        return history.push('/dashboard');
       }
       try {
         const response = await api.post('/api/auth/login', { username: email, password });
