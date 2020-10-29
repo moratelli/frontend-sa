@@ -16,7 +16,7 @@ const Show = () => {
       try {
         const response = await api.get(`/api/users/${userId}/transactions`);
 
-        setTransactions(response.data);
+        setTransactions(response.data || []);
       } catch (err) {
         console.log('ERROR GET TRANSACTIONS');
       }
@@ -29,6 +29,7 @@ const Show = () => {
     <tr key={transaction.id}>
       <td>{transaction.value}</td>
       <td>{transaction.description}</td>
+      <td>{transaction.category}</td>
       <td>{transaction.flow}</td>
     </tr>
   ));
@@ -42,7 +43,7 @@ const Show = () => {
             <tr>
               <th>Valor</th>
               <th>Descrição</th>
-              {/* <th>Categoria</th> */}
+              <th>Categoria</th>
               <th>Fluxo</th>
             </tr>
           </thead>

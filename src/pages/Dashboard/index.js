@@ -28,8 +28,8 @@ const Dashboard = () => {
       content = <Create />;
       break;
     case '?report':
-        content = <Report />;
-        break;
+      content = <Report />;
+      break;
     default:
       history.push({ pathname: '/dashboard', search: '?show' });
   }

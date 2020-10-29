@@ -3,7 +3,7 @@ import {
   useHistory,
 } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
-import { Bar, Pie, HorizontalBar } from 'react-chartjs-2'
+import { Bar, Pie, HorizontalBar } from 'react-chartjs-2';
 
 import './styles.css';
 import api from '../../services/api';
@@ -34,7 +34,7 @@ const data = {
       borderWidth: 1,
     },
   ],
-}
+};
 
 const options = {
   scales: {
@@ -46,7 +46,7 @@ const options = {
       },
     ],
   },
-}
+};
 
 const Report = () => {
   const history = useHistory();
@@ -81,7 +81,7 @@ const Report = () => {
 
   return (
     <Container fluid id="create-container">
-      <div><Bar data={data} options={options}/></div>
+      <div><Bar data={data} options={options} /></div>
       <div><Pie data={data} /></div>
       <div><HorizontalBar data={data} /></div>
     </Container>

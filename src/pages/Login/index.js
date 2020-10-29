@@ -24,38 +24,39 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [validated, setValidated] = useState(false);
 
   useEffect(() => {
     if (location.state?.missingAuth) {
       setShowError(true);
       setErrorMessage('É necessário se autenticar para acessar o sistema!');
     }
+    if (location.state?.successMessage) {
+      setShowSuccess(true);
+      setSuccessMessage(location.state?.successMessage);
+    }
   }, [location]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setShowError(true);
-      setErrorMessage('Preencha todos os campos para continuar!');
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
     } else {
-      console.log(email === 'a@a.com' && password === 'a', email, password);
-      if (email === 'a@a.com' && password === 'a') {
-        login('token');
-        setUserData({
-          userId: 1,
-        });
-
-        return history.push('/dashboard');
-      }
       try {
         const response = await api.post('/api/auth/login', { username: email, password });
         login(response.data.accessToken);
         setUserData({
           userId: response.data.id,
         });
+        setValidated(true);
         history.push('/dashboard');
       } catch (err) {
+        setValidated(false);
         setShowError(true);
         setErrorMessage('Email e/ou senha inválido!');
       }
@@ -76,6 +77,8 @@ const Login = () => {
             <Form
               id="login-form"
               onSubmit={handleFormSubmit}
+              noValidate
+              validated={validated}
             >
               <Collapse in={showError} timeout={100}>
                 <div>
@@ -88,13 +91,28 @@ const Login = () => {
                   </Alert>
                 </div>
               </Collapse>
+              <Collapse in={showSuccess} timeout={100}>
+                <div>
+                  <Alert
+                    variant="success"
+                    dismissible
+                    onClose={() => setShowSuccess(false)}
+                  >
+                    {successMessage}
+                  </Alert>
+                </div>
+              </Collapse>
               <Form.Group>
                 <Form.Control
                   type="email"
-                  placeholder="Email"
+                  placeholder="E-mail"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
+                <Form.Control.Feedback type="invalid">
+                  Informe um e-mail válido.
+                </Form.Control.Feedback>
               </Form.Group>
               <Form.Group>
                 <Form.Control
@@ -102,7 +120,11 @@ const Login = () => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
+                <Form.Control.Feedback type="invalid">
+                  Infome sua senha.
+                </Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mt-5">
                 <Button

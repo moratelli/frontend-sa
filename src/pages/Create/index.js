@@ -16,7 +16,8 @@ import { getUserData } from '../../services/auth';
 const Create = () => {
   const history = useHistory();
   const [value, setValue] = useState();
-  const [flow, setFlow] = useState();
+  const [flow, setFlow] = useState('IN');
+  const [category, setCategory] = useState();
   const [description, setDescription] = useState();
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -31,7 +32,7 @@ const Create = () => {
     } else {
       try {
         const response = await api.post('/api/transactions', {
-          description, flow, value, user: { id: userId },
+          description, flow, value, category, user: { id: userId },
         });
 
         if (response.data.id) {
@@ -43,6 +44,18 @@ const Create = () => {
       }
     }
   };
+
+  const optionsOut = [
+    { value: 'ROUPAS', label: 'Roupas' },
+    { value: 'COMIDA', label: 'Comida' },
+    { value: 'TRANSPORTE', label: 'Transporte' },
+  ];
+
+  const optionsIn = [
+    { value: 'SALARIO', label: 'Salário' },
+    { value: 'APOSTA', label: 'Aposta' },
+    { value: 'FREELANCE', label: 'Freelance' },
+  ];
 
   return (
     <Container fluid id="create-container">
@@ -73,6 +86,7 @@ const Create = () => {
             <Form.Label>Tipo de transação</Form.Label>
             <Form.Check
               type="radio"
+              id="entrada"
               label="Entrada"
               name="flow"
               checked={flow === 'IN' && true}
@@ -82,43 +96,34 @@ const Create = () => {
               type="radio"
               label="Saída"
               name="flow"
+              id="saída"
               checked={flow === 'OUT' && true}
               onChange={() => setFlow('OUT')}
             />
           </Form.Group>
-          {/* <Form.Group>
-
-            ADICIONAR NOVAMENTE APÓS FINALIZAR LÓGICA DE CATEGORIA NO BACKEND
-
+          <Form.Group>
             <Form.Label>Selecione uma categoria</Form.Label>
             <Form.Control
               as="select"
-              id="category"
               placeholder="Selecione uma categoria..."
+              onChange={(e) => setCategory(e.target.value)}
             >
-              <option>Aluguel</option>
-              <option>Transporte</option>
-              <option>Lazer</option>
-              <option>Alimentação</option>
-              <option>Contas</option>
-              <option>Salário</option>
-              <option>Empréstimo</option>
-              <option>Freelancer</option>
-              <option>Outros</option>
+              {flow === 'IN'
+                ? optionsIn.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)
+                : optionsOut.map((item) => <option key={item.value} value={item.value}>{item.label}</option>) }
             </Form.Control>
-          </Form.Group> */}
+          </Form.Group>
           <Form.Group>
             <Form.Label>Descreva sua transação</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={4}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+                as="textarea"
+                rows={4}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
           <Form.Row>
             <Button type="submit">Criar</Button>
-            {/* <Button type="button">Confirmar</Button> */}
           </Form.Row>
         </Form>
       </Col>
