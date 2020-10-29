@@ -11,6 +11,7 @@ import './styles.css';
 import Sidebar from '../../components/Sidebar/index';
 import Create from '../Create';
 import Show from '../Show';
+import Report from '../Report';
 
 const Dashboard = () => {
   const history = useHistory();
@@ -26,6 +27,9 @@ const Dashboard = () => {
     case '?create':
       content = <Create />;
       break;
+    case '?report':
+        content = <Report />;
+        break;
     default:
       history.push({ pathname: '/dashboard', search: '?show' });
   }
