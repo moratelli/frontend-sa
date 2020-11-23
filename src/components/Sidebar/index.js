@@ -18,13 +18,12 @@ const Sidebar = () => {
   return (
     <>
       <Nav
-        className="col-md-12 d-none d-md-block bg-light sidebar"
+        className="col-md-12 pr-0 d-none d-md-block bg-light sidebar"
         activeKey={path}
+        variant="pills"
       >
-        <div className="sidebar-sticky" />
-
         <Nav.Item>
-          <Nav.Link eventKey="?profile" as={Link} to="/dashboard?show">
+          <Nav.Link eventKey="?profile" as={Link} to="/dashboard?profile">
             Perfil
           </Nav.Link>
         </Nav.Item>

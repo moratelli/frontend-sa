@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState } from 'react';
 import {
   useHistory,
@@ -71,9 +72,10 @@ const Create = () => {
             </Alert>
           </div>
         </Collapse>
+        <h1>Criar transação</h1>
         <Form id="create-form" onSubmit={handleFormSubmit}>
           <Form.Group>
-            <Form.Label>Criar transação</Form.Label>
+            <Form.Label>Valor</Form.Label>
             <Form.Control
               type="number"
               id="transaction"

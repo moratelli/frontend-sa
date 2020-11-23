@@ -9,8 +9,9 @@ import Col from 'react-bootstrap/Col';
 
 import './styles.css';
 import Sidebar from '../../components/Sidebar/index';
-import Create from '../Create';
+import Profile from '../Profile';
 import Show from '../Show';
+import Create from '../Create';
 import Report from '../Report';
 
 const Dashboard = () => {
@@ -21,6 +22,9 @@ const Dashboard = () => {
   let content;
 
   switch (path) {
+    case '?profile':
+      content = <Profile />;
+      break;
     case '?show':
       content = <Show />;
       break;
