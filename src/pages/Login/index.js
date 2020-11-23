@@ -1,37 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import {
-  useHistory,
-  useLocation,
-  Link,
-} from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Alert from 'react-bootstrap/Alert';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Collapse from 'react-bootstrap/Collapse';
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation, Link } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Alert from "react-bootstrap/Alert";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Collapse from "react-bootstrap/Collapse";
 
-import api from '../../services/api';
-import { login, setUserData } from '../../services/auth';
+import api from "../../services/api";
+import { login, setUserData } from "../../services/auth";
 
-import './styles.css';
+import "./styles.css";
 
 const Login = () => {
   const location = useLocation();
   const history = useHistory();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
   const [validated, setValidated] = useState(false);
 
   useEffect(() => {
     if (location.state?.missingAuth) {
       setShowError(true);
-      setErrorMessage('É necessário se autenticar para acessar o sistema!');
+      setErrorMessage("É necessário se autenticar para acessar o sistema!");
     }
     if (location.state?.successMessage) {
       setShowSuccess(true);
@@ -48,17 +44,20 @@ const Login = () => {
       setValidated(true);
     } else {
       try {
-        const response = await api.post('/api/auth/login', { username: email, password });
+        const response = await api.post("/api/auth/login", {
+          username: email,
+          password,
+        });
         login(response.data.accessToken);
         setUserData({
           userId: response.data.id,
         });
         setValidated(true);
-        history.push('/dashboard');
+        history.push("/dashboard");
       } catch (err) {
         setValidated(false);
         setShowError(true);
-        setErrorMessage('Email e/ou senha inválido!');
+        setErrorMessage("Email e/ou senha inválido!");
       }
     }
   };
@@ -67,7 +66,9 @@ const Login = () => {
     <Container fluid id="login-container">
       <Row noGutters className="h-100 align-items-center">
         <Col md="7">
-          <picture id="login-picture"><img src="" alt="stonks" /></picture>
+          <picture id="login-picture">
+            <img src="" alt="stonks" />
+          </picture>
         </Col>
         <Col md="5">
           <section id="login-box" className="text-center col-md-6 mx-auto">
@@ -105,6 +106,7 @@ const Login = () => {
               <Form.Group>
                 <Form.Control
                   type="email"
+                  id="user-email"
                   placeholder="E-mail"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -117,6 +119,7 @@ const Login = () => {
               <Form.Group>
                 <Form.Control
                   type="password"
+                  id="user-password"
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -129,6 +132,7 @@ const Login = () => {
               <Form.Group className="mt-5">
                 <Button
                   variant="info"
+                  id="login-button"
                   block
                   className="font-weight-bold"
                   type="submit"
