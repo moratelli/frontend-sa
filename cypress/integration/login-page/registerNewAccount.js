@@ -1,11 +1,10 @@
-describe("Register", () => {
+describe("Register New Account", () => {
   beforeEach(() => {
     cy.visit("https://frontend-sa.netlify.app");
     cy.get("a").contains("Não possui uma conta?").click();
   });
 
   const randomString = Math.random().toString(36).slice(2);
-
   const validName = "Test Subject";
   const validEmail = `${randomString}@cypress.com`;
   const validPassword = "123";
