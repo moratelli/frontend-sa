@@ -1,13 +1,11 @@
 #login-container {
   height: 100%;
   padding: 0;
-  background: url("./coins-in-jar.jpg") no-repeat center center / cover;
+  background: url("../../img/coins-in-jar.jpg") no-repeat center center / cover;
   height: 100%;
 }
 
 div .col-md-5 {
-  /* border: 2px solid rgba(0, 0, 0, 0.3); */
-  /* background-color: rgba(240, 240, 240, 0.3); */
   background: rgb(255, 255, 255);
   background: linear-gradient(
     90deg,

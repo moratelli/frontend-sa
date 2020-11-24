@@ -11,7 +11,7 @@ import Collapse from "react-bootstrap/Collapse";
 import api from "../../services/api";
 import { login, setUserData } from "../../services/auth";
 
-import logo from "./poup-logo-no-shadow.png";
+import logo from "../../img/poup-logo-no-shadow.png";
 import "./styles.css";
 
 const Login = () => {
