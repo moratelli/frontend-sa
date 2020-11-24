@@ -1,7 +1,9 @@
 #login-container {
   height: 100%;
   padding: 0;
-  background: url("../../img/coins-in-jar.jpg") no-repeat center center / cover;
+  background: url("../../img/coins-in-jar.jpg") no-repeat center center / cover,
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+  background-blend-mode: overlay;
   height: 100%;
 }
 
@@ -10,7 +12,7 @@ div .col-md-5 {
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0%,
-    rgba(240, 240, 240, 0.5) 5%
+    rgba(240, 240, 240, 0.4) 5%
   );
   height: 100%;
 }
