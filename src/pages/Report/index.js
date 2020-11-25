@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form } from 'react-bootstrap';
+import { Form,Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Bar, Pie, HorizontalBar, Line } from 'react-chartjs-2';
 import api from '../../services/api';
@@ -122,6 +122,7 @@ const Report = () => {
         </Form.Row>
       </Form.Group>
       <div>
+
         <Pie
           options={{
             tooltips: {
