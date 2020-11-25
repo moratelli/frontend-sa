@@ -1,25 +1,25 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Alert from "react-bootstrap/Alert";
-import Collapse from "react-bootstrap/Collapse";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Alert from 'react-bootstrap/Alert';
+import Collapse from 'react-bootstrap/Collapse';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
-import "./styles.css";
-import logo from "../../img/poup-logo-no-shadow.png";
-import api from "../../services/api";
+import './styles.css';
+import logo from '../../img/poup-logo-no-shadow.png';
+import api from '../../services/api';
 
 const Register = () => {
   const history = useHistory();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -32,22 +32,22 @@ const Register = () => {
     }
 
     try {
-      const response = await api.post("/api/auth/register", {
+      const response = await api.post('/api/auth/register', {
         name,
         username: email,
         email,
         password,
-        role: ["user"],
+        role: ['user'],
       });
 
       const { message } = response.data;
 
       setValidated(true);
-      history.push({ pathname: "/", state: { successMessage: message } });
+      history.push({ pathname: '/', state: { successMessage: message } });
     } catch (err) {
       setValidated(false);
       setShowError(true);
-      setErrorMessage("O e-mail informado já está em uso!");
+      setErrorMessage('O e-mail informado já está em uso!');
     }
   };
 
@@ -57,7 +57,7 @@ const Register = () => {
         noGutters
         className="h-100 align-items-center justify-content-center"
       >
-        <Col md="7"></Col>
+        <Col md="7" />
         <Col md="5">
           <section id="login-box" className="text-center col-md-6 mx-auto">
             <header className="mb-5">
