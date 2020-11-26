@@ -9,7 +9,7 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-import logo from "../../img/poup-logo-no-shadow.png";
+import logo from "../../img/poup-logo-light.png";
 
 import "./styles.css";
 import { logout } from "../../services/auth";
@@ -57,7 +57,7 @@ const Sidebar = () => {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link>
-            <Button variant="outline-danger" onClick={handleLogout}>
+            <Button size="sm" variant="danger" onClick={handleLogout}>
               Logout
             </Button>
           </Nav.Link>

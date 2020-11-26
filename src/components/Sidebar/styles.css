@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #f2f2f2;
+  background-color: #1fab89;
 }
 
 header {
@@ -14,20 +14,21 @@ header {
   justify-content: center;
 }
 
-header > img {
+.sidebar > header > img {
   max-width: 140px;
 }
 
 .nav-item > a {
-  color: #1fab89;
+  color: #d7fbe8;
 }
 
 .nav-item > a:hover {
-  color: #62d2a2;
+  color: #fff;
 }
 
 .nav-item > a.nav-link.active {
-  background-color: #1fab89;
+  background-color: #d7fbe8;
+  color: #1fab89;
 }
 
 .nav-item > a > svg {
@@ -37,4 +38,5 @@ header > img {
 
 .nav-item:nth-child(6) {
   margin-top: 25px;
+  align-self: center;
 }
