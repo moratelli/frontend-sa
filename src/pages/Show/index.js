@@ -28,14 +28,23 @@ const Show = () => {
   }, [userId]);
 
   const createTableRows = () =>
-    transactions.reverse().map((transaction) => (
-      <tr key={transaction.id}>
-        <td>R$ {transaction.value}</td>
-        <td>{transaction.description}</td>
-        <td>{transaction.category}</td>
-        <td>{transaction.flow}</td>
-      </tr>
-    ));
+    transactions
+      .reverse()
+      .slice(0, 10)
+      .map((transaction) => (
+        <tr
+          key={transaction.id}
+          style={
+            transaction.flow === "IN"
+              ? { backgroundColor: "#e2f5ee", color: "#1fab89" }
+              : { backgroundColor: "#fae9e8", color: "#ff322b" }
+          }
+        >
+          <td>R$ {transaction.value}</td>
+          <td>{transaction.description}</td>
+          <td>{transaction.category}</td>
+        </tr>
+      ));
 
   const calculateSpending = () => {
     const lastTenTransactions = transactions.reverse().slice(0, 10);
@@ -105,23 +114,22 @@ const Show = () => {
 
   return (
     <Container fluid id="show-container">
-      <Row noGutters className="h-100 w-100 align-items-center">
-        <Col xs={6}>
+      <Row noGutters className="align-items-center">
+        <Col xs={5} id="welcome-message">
           <h1>Olá, {name}! 👋</h1>
           <br></br>
           <h3>Nas suas últimas dez transações, percebi que você...</h3>
           {calculateSpending()}
         </Col>
-        <Col xs={6}>
+        <Col xs={6} id="latest-transactions">
           <h2>Últimos registros</h2>
           <br></br>
-          <Table striped bordered hover responsive size="sm">
+          <Table responsive size="sm">
             <thead>
               <tr>
                 <th>Valor</th>
                 <th>Descrição</th>
                 <th>Categoria</th>
-                <th>Fluxo</th>
               </tr>
             </thead>
             <tbody>{createTableRows()}</tbody>

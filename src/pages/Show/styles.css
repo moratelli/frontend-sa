@@ -3,6 +3,18 @@
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: space-between;
   justify-content: center;
+}
+
+#show-container > .row {
+  justify-content: space-around;
+}
+
+#welcome-message,
+#latest-transactions {
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  padding: 70px;
+  background-color: #f8f9fa;
 }
