@@ -1,17 +1,9 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
-import { Form,Row } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Bar, Pie, HorizontalBar, Line } from 'react-chartjs-2';
 import api from '../../services/api';
 import { getUserData } from '../../services/auth';
-=======
-import React, { useState, useEffect } from "react";
-import Container from "react-bootstrap/Container";
-import { Pie } from "react-chartjs-2";
-import api from "../../services/api";
-import { getUserData } from "../../services/auth";
->>>>>>> 0598a71e5ff371fc2c6456ba4d9a6fa9b67ee4c2
 
 import "./styles.css";
 
