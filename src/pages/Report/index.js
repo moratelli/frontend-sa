@@ -1,13 +1,21 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { Form,Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Bar, Pie, HorizontalBar, Line } from 'react-chartjs-2';
 import api from '../../services/api';
 import { getUserData } from '../../services/auth';
+=======
+import React, { useState, useEffect } from "react";
+import Container from "react-bootstrap/Container";
+import { Pie } from "react-chartjs-2";
+import api from "../../services/api";
+import { getUserData } from "../../services/auth";
+>>>>>>> 0598a71e5ff371fc2c6456ba4d9a6fa9b67ee4c2
 
-import './styles.css';
+import "./styles.css";
 
-const data = {
+ const data = {
   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
   datasets: [
     {
@@ -47,7 +55,7 @@ const Report = () => {
 
         setTransactions(response.data || []);
       } catch (err) {
-        console.log('ERROR GET TRANSACTIONS');
+        console.log("ERROR GET TRANSACTIONS");
       }
     };
 
@@ -55,11 +63,14 @@ const Report = () => {
   }, [userId]);
 
   useEffect(() => {
-    const inTransactions = transactions.filter((t) => t.flow === 'IN');
+    const inTransactions = transactions.filter((t) => t.flow === "IN");
     const totalIn = inTransactions.reduce((total, cur) => total + cur.value, 0);
 
-    const outTransactions = transactions.filter((t) => t.flow === 'OUT');
-    const totalOut = outTransactions.reduce((total, cur) => total + cur.value, 0);
+    const outTransactions = transactions.filter((t) => t.flow === "OUT");
+    const totalOut = outTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
 
     setFlowChartData([totalIn, totalOut]);
   }, [transactions]);
@@ -127,7 +138,7 @@ const Report = () => {
           options={{
             tooltips: {
               enabled: true,
-              mode: 'single',
+              mode: "single",
               callbacks: {
                 label(tooltipItems, data) {
                   return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
@@ -136,19 +147,16 @@ const Report = () => {
             },
           }}
           data={() => ({
-            labels: ['Entrada', 'Saída'],
+            labels: ["Entrada", "Saída"],
             datasets: [
               {
-                label: '# de Fluxo',
+                label: "# de Fluxo",
                 data: flowChartData,
                 backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
                 ],
-                borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                ],
+                borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
                 borderWidth: 1,
               },
             ],

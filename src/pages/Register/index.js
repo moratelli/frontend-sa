@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import './styles.css';
+import logo from '../../img/poup-logo-no-shadow.png';
 import api from '../../services/api';
 
 const Register = () => {
@@ -56,10 +57,11 @@ const Register = () => {
         noGutters
         className="h-100 align-items-center justify-content-center"
       >
-        <Col>
+        <Col md="7" />
+        <Col md="5">
           <section id="login-box" className="text-center col-md-6 mx-auto">
             <header className="mb-5">
-              <img src="../img/logo-dark.png" alt="Logo" />
+              <img src={logo} alt="Logo" />
             </header>
             <Form
               id="register-form"
@@ -138,10 +140,10 @@ const Register = () => {
                 </Button>
               </Form.Group>
             </Form>
+            <footer className="text-center">
+              <Link to="/">Já possui uma conta?</Link>
+            </footer>
           </section>
-          <footer className="text-center">
-            <Link to="/">Já possui uma conta?</Link>
-          </footer>
         </Col>
       </Row>
     </Container>
