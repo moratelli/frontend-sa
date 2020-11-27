@@ -89,7 +89,7 @@ const Create = () => {
             <Form.Label>Valor</Form.Label>
             <Form.Control
               type="number"
-              id="transaction"
+              id="valor"
               placeholder="R$"
               value={value}
               onChange={(e) => setValue(e.target.value)}

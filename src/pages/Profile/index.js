@@ -40,11 +40,20 @@ const Create = () => {
     }
 
     try {
-      const response = await api.put(`/api/users/${userId}`, {
-        name,
-        email,
-        password,
-      });
+      let response;
+
+      if (!password) {
+        response = await api.put(`/api/users/${userId}`, {
+          name,
+          email,
+        });
+      } else {
+        response = await api.put(`/api/users/${userId}`, {
+          name,
+          email,
+          password,
+        });
+      }
 
       if (response.data.id) {
         setUserData({
@@ -102,6 +111,8 @@ const Create = () => {
           <Form.Group>
             <Form.Label>Nome</Form.Label>
             <Form.Control
+              id="nome"
+              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -109,22 +120,25 @@ const Create = () => {
           <Form.Group>
             <Form.Label>E-mail</Form.Label>
             <Form.Control
+              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
           <Form.Row>
             <Form.Group as={Col}>
-              <Form.Label>Senha</Form.Label>
+              <Form.Label>Nova senha</Form.Label>
               <Form.Control
+                id="senha"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
             <Form.Group as={Col}>
-              <Form.Label>Confirmar Senha</Form.Label>
+              <Form.Label>Confirmar nova senha</Form.Label>
               <Form.Control
+                id="confirmar-senha"
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}

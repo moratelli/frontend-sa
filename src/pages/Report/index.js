@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
-import { Bar, Pie, HorizontalBar, Line } from "react-chartjs-2";
+import { Bar, Pie, HorizontalBar } from "react-chartjs-2";
 import api from "../../services/api";
 import { getUserData } from "../../services/auth";
 
@@ -97,7 +97,12 @@ const Report = () => {
       0
     );
 
-    setInCategoryChartData([totalSalario, totalInvestimentos, totalEmprestimo, totalOutros]);
+    setInCategoryChartData([
+      totalSalario,
+      totalInvestimentos,
+      totalEmprestimo,
+      totalOutros,
+    ]);
   }, [transactions]);
 
   useEffect(() => {
@@ -136,9 +141,7 @@ const Report = () => {
       (total, cur) => total + cur.value,
       0
     );
-    const petsTransactions = transactions.filter(
-      (t) => t.category === "PETS"
-    );
+    const petsTransactions = transactions.filter((t) => t.category === "PETS");
     const totalPets = petsTransactions.reduce(
       (total, cur) => total + cur.value,
       0
@@ -165,16 +168,26 @@ const Report = () => {
       0
     );
     const outrosTransactions = transactions.filter(
-      (t) => t.category === "OUTROS" && t.flow ==="OUT"
+      (t) => t.category === "OUTROS" && t.flow === "OUT"
     );
     const totalOutros = outrosTransactions.reduce(
       (total, cur) => total + cur.value,
       0
     );
 
-    setOutCategoryChartData([totalAlimentacao, totalAssinaturas, totalEducacao, totalImpostos, totalLazer, totalPets, totalRoupas, totalSaude, totalTransporte, totalOutros]);
+    setOutCategoryChartData([
+      totalAlimentacao,
+      totalAssinaturas,
+      totalEducacao,
+      totalImpostos,
+      totalLazer,
+      totalPets,
+      totalRoupas,
+      totalSaude,
+      totalTransporte,
+      totalOutros,
+    ]);
   }, [transactions]);
-
 
   return (
     <Container fluid id="report-container">
@@ -234,13 +247,19 @@ const Report = () => {
                   "rgba(153, 102, 255, 0.2)",
                   "rgba(255, 159, 64, 0.2)",
                 ],
-                borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)", "rgba(153, 102, 255, 1)", "rgba(255, 159, 64, 1)",],
+                borderColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                ],
                 borderWidth: 1,
               },
             ],
           })}
         />
-        <HorizontalBar options={{
+        <HorizontalBar
+          options={{
             tooltips: {
               enabled: true,
               mode: "single",
@@ -252,7 +271,18 @@ const Report = () => {
             },
           }}
           data={() => ({
-            labels: ["Alimentação", "Assinaturas", "Educação", "Impostos", "Lazer", "Pets", "Roupas", "Saude", "Transporte", "Outros"],
+            labels: [
+              "Alimentação",
+              "Assinaturas",
+              "Educação",
+              "Impostos",
+              "Lazer",
+              "Pets",
+              "Roupas",
+              "Saude",
+              "Transporte",
+              "Outros",
+            ],
             datasets: [
               {
                 label: "# de Categoria de Saídas",
@@ -285,7 +315,8 @@ const Report = () => {
                 borderWidth: 1,
               },
             ],
-          })}/>
+          })}
+        />
         {/* <Line width={100} height={50} data={data} /> */}
       </div>
     </Container>
