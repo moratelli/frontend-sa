@@ -1,4 +1,7 @@
 describe("Change name", () => {
+  const initialName = "Cypress";
+  const newName = "Pedro";
+
   beforeEach(() => {
     cy.visit("/");
     cy.get("#user-email").type("cypress@testes.com");
@@ -7,15 +10,15 @@ describe("Change name", () => {
     cy.get(".nav-link").contains("Perfil").click();
   });
 
-  it("Sucessful name change", () => {
-    cy.get("#nome").clear().type("Pedro");
+  it("Successful name change", () => {
+    cy.get("#nome").clear().type(newName);
     cy.get("#save-button").click();
     cy.get(".nav-link").contains("Home").click();
-    cy.document().should("contain.text", "Pedro");
+    cy.document().should("contain.text", newName);
     cy.get(".nav-link").contains("Perfil").click();
-    cy.get("#nome").clear().type("Cypress");
+    cy.get("#nome").clear().type(initialName);
     cy.get("#save-button").click();
-    cy.document().should("contain.text", "Cypress");
+    cy.document().should("contain.text", initialName);
   });
 
   it("User didn't insert a name", () => {

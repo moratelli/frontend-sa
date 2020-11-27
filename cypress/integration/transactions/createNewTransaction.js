@@ -20,7 +20,7 @@ describe("Create a new transaction", () => {
     cy.get("[id=descricao]").type(text);
     cy.get("[id=create-button]").click();
     cy.document().should("contain.text", amount);
-    cy.document().should("contain.text", "SALARIO");
+    cy.document().should("contain.text", "Salário");
     cy.document().should("contain.text", text);
   });
 
@@ -34,7 +34,7 @@ describe("Create a new transaction", () => {
     cy.get("[id=descricao]").type(text);
     cy.get("[id=create-button]").click();
     cy.document().should("contain.text", amount);
-    cy.document().should("contain.text", "ALIMENTACAO");
+    cy.document().should("contain.text", "Alimentação");
     cy.document().should("contain.text", text);
   });
 
