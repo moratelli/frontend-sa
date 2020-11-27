@@ -18,3 +18,7 @@
   padding: 70px;
   background-color: #f8f9fa;
 }
+
+#latest-transactions > div > table > tbody > tr:hover {
+  filter: brightness(97%);
+}
