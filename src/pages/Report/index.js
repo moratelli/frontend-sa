@@ -37,8 +37,8 @@ const data = {
 const Report = () => {
   const [transactions, setTransactions] = useState([]);
   const [flowChartData, setFlowChartData] = useState([]);
-  // eslint-disable-next-line
   const [inCategoryChartData, setInCategoryChartData] = useState([]);
+  const [outCategoryChartData, setOutCategoryChartData] = useState([]);
   const { userId } = getUserData();
 
   useEffect(() => {
@@ -76,68 +76,111 @@ const Report = () => {
       (total, cur) => total + cur.value,
       0
     );
-
-    const apostaTransactions = transactions.filter(
-      (t) => t.category === "APOSTA"
+    const investimentosTransactions = transactions.filter(
+      (t) => t.category === "INVESTIMENTOS"
     );
-    const totalAposta = apostaTransactions.reduce(
+    const totalInvestimentos = investimentosTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
+    const emprestimoTransactions = transactions.filter(
+      (t) => t.category === "EMPRESTIMO"
+    );
+    const totalEmprestimo = emprestimoTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
+    const outrosTransactions = transactions.filter(
+      (t) => t.category === "OUTROS" && t.flow === "IN"
+    );
+    const totalOutros = outrosTransactions.reduce(
       (total, cur) => total + cur.value,
       0
     );
 
-    const freelanceTransactions = transactions.filter(
-      (t) => t.category === "FREELANCE"
-    );
-    const totalFreelance = freelanceTransactions.reduce(
-      (total, cur) => total + cur.value,
-      0
-    );
-
-    setInCategoryChartData([totalSalario, totalAposta, totalFreelance]);
+    setInCategoryChartData([totalSalario, totalInvestimentos, totalEmprestimo, totalOutros]);
   }, [transactions]);
+
+  useEffect(() => {
+    const alimentacaoTransactions = transactions.filter(
+      (t) => t.category === "ALIMENTACAO"
+    );
+    const totalAlimentacao = alimentacaoTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
+    const assinaturasTransactions = transactions.filter(
+      (t) => t.category === "ASSINATURAS_E_SERVICOS"
+    );
+    const totalAssinaturas = assinaturasTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
+    const educacaoTransactions = transactions.filter(
+      (t) => t.category === "EDUCACAO"
+    );
+    const totalEducacao = educacaoTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
+    const impostosTransactions = transactions.filter(
+      (t) => t.category === "IMPOSTOS_E_ETAXAS"
+    );
+    const totalImpostos = impostosTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
+    const lazerTransactions = transactions.filter(
+      (t) => t.category === "LAZER_E_HOBBIES"
+    );
+    const totalLazer = lazerTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
+    const petsTransactions = transactions.filter(
+      (t) => t.category === "PETS"
+    );
+    const totalPets = petsTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
+    const roupasTransactions = transactions.filter(
+      (t) => t.category === "ROUPAS"
+    );
+    const totalRoupas = roupasTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
+    const saudeTransactions = transactions.filter(
+      (t) => t.category === "SAUDE"
+    );
+    const totalSaude = saudeTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
+    const transporteTransactions = transactions.filter(
+      (t) => t.category === "TRANSPORTE"
+    );
+    const totalTransporte = transporteTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
+    const outrosTransactions = transactions.filter(
+      (t) => t.category === "OUTROS" && t.flow ==="OUT"
+    );
+    const totalOutros = outrosTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0
+    );
+
+    setOutCategoryChartData([totalAlimentacao, totalAssinaturas, totalEducacao, totalImpostos, totalLazer, totalPets, totalRoupas, totalSaude, totalTransporte, totalOutros]);
+  }, [transactions]);
+
 
   return (
     <Container fluid id="report-container">
       <h1>Relatórios</h1>
       <br />
-      <select>
-        <option value="InOutTotal">Total de Entradas e Saídas</option>
-        <option value="InCategories">Total de Entradas por Categoria</option>
-        <option value="OutCategories">Total de Saídas por Categoria</option>
-        <option value="InDateTime">Total de Entradas por Data</option>
-        <option value="OutDateTime">Total de Saídas por Data</option>
-        <option value="InOutCategories">
-          Total de Entradas e Saídas por Categoria
-        </option>
-        <option value="InOutDateTime">
-          Total de Entradas e Saídas por Data
-        </option>
-      </select>
-      <br />
-      <Form.Group>
-        <Form.Row>
-          <Form.Check type="radio" id="chart" label="Pizza" name="flow" />
-
-          <Form.Check
-            type="radio"
-            id="chart"
-            label="Barra Horizontal"
-            name="flow"
-          />
-          <Form.Check
-            type="radio"
-            id="chart"
-            label="Barra Vertical"
-            name="flow"
-          />
-          <Form.Check
-            type="radio"
-            id="chart"
-            label="Linha Horizontal"
-            name="flow"
-          />
-        </Form.Row>
-      </Form.Group>
       <div>
         <Pie
           options={{
@@ -167,9 +210,84 @@ const Report = () => {
             ],
           })}
         />
-        <Bar width={100} height={50} data={data} />
-        <HorizontalBar width={100} height={50} data={data} />
-        <Line width={100} height={50} data={data} />
+        <Bar
+          options={{
+            tooltips: {
+              enabled: true,
+              mode: "single",
+              callbacks: {
+                label(tooltipItems, data) {
+                  return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
+                },
+              },
+            },
+          }}
+          data={() => ({
+            labels: ["Salário", "Investimentos", "Empréstimo", "Outros"],
+            datasets: [
+              {
+                label: "# de Categoria de Entradas",
+                data: inCategoryChartData,
+                //data: [30,50,20,100],
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(255, 159, 64, 0.2)",
+                ],
+                borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)", "rgba(153, 102, 255, 1)", "rgba(255, 159, 64, 1)",],
+                borderWidth: 1,
+              },
+            ],
+          })}
+        />
+        <HorizontalBar options={{
+            tooltips: {
+              enabled: true,
+              mode: "single",
+              callbacks: {
+                label(tooltipItems, data) {
+                  return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
+                },
+              },
+            },
+          }}
+          data={() => ({
+            labels: ["Alimentação", "Assinaturas", "Educação", "Impostos", "Lazer", "Pets", "Roupas", "Saude", "Transporte", "Outros"],
+            datasets: [
+              {
+                label: "# de Categoria de Saídas",
+                data: outCategoryChartData,
+                //data: [1,2,3,4,5,6,7,8,9,10],
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 206, 86, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(255, 159, 64, 0.2)",
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 206, 86, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                ],
+                borderColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          })}/>
+        {/* <Line width={100} height={50} data={data} /> */}
       </div>
     </Container>
   );
