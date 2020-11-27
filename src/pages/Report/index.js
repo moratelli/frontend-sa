@@ -1,20 +1,10 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import { Bar, Pie, HorizontalBar } from "react-chartjs-2";
 import api from "../../services/api";
 import { getUserData } from "../../services/auth";
-=======
-import React, { useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import {
-  Bar, Pie, HorizontalBar, Line,
-} from 'react-chartjs-2';
-import api from '../../services/api';
-import { getUserData } from '../../services/auth';
->>>>>>> 4f54cf6b5b214967fb8585a1eb299db81fd8bfb4
 
-import './styles.css';
+import "./styles.css";
 
 // const data = {
 //   labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -57,7 +47,7 @@ const Report = () => {
 
         setTransactions(response.data || []);
       } catch (err) {
-        console.log('ERROR GET TRANSACTIONS');
+        console.log("ERROR GET TRANSACTIONS");
       }
     };
 
@@ -65,13 +55,13 @@ const Report = () => {
   }, [userId]);
 
   useEffect(() => {
-    const inTransactions = transactions.filter((t) => t.flow === 'IN');
+    const inTransactions = transactions.filter((t) => t.flow === "IN");
     const totalIn = inTransactions.reduce((total, cur) => total + cur.value, 0);
 
-    const outTransactions = transactions.filter((t) => t.flow === 'OUT');
+    const outTransactions = transactions.filter((t) => t.flow === "OUT");
     const totalOut = outTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
 
     setFlowChartData([totalIn, totalOut]);
@@ -79,32 +69,32 @@ const Report = () => {
 
   useEffect(() => {
     const salarioTransactions = transactions.filter(
-      (t) => t.category === 'SALARIO',
+      (t) => t.category === "SALARIO"
     );
     const totalSalario = salarioTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
     const investimentosTransactions = transactions.filter(
-      (t) => t.category === 'INVESTIMENTOS',
+      (t) => t.category === "INVESTIMENTOS"
     );
     const totalInvestimentos = investimentosTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
     const emprestimoTransactions = transactions.filter(
-      (t) => t.category === 'EMPRESTIMO',
+      (t) => t.category === "EMPRESTIMO"
     );
     const totalEmprestimo = emprestimoTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
     const outrosTransactions = transactions.filter(
-      (t) => t.category === 'OUTROS' && t.flow === 'IN',
+      (t) => t.category === "OUTROS" && t.flow === "IN"
     );
     const totalOutros = outrosTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
 
     setInCategoryChartData([
@@ -117,82 +107,72 @@ const Report = () => {
 
   useEffect(() => {
     const alimentacaoTransactions = transactions.filter(
-      (t) => t.category === 'ALIMENTACAO',
+      (t) => t.category === "ALIMENTACAO"
     );
     const totalAlimentacao = alimentacaoTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
     const assinaturasTransactions = transactions.filter(
-      (t) => t.category === 'ASSINATURAS_E_SERVICOS',
+      (t) => t.category === "ASSINATURAS_E_SERVICOS"
     );
     const totalAssinaturas = assinaturasTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
     const educacaoTransactions = transactions.filter(
-      (t) => t.category === 'EDUCACAO',
+      (t) => t.category === "EDUCACAO"
     );
     const totalEducacao = educacaoTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
     const impostosTransactions = transactions.filter(
-      (t) => t.category === 'IMPOSTOS_E_ETAXAS',
+      (t) => t.category === "IMPOSTOS_E_ETAXAS"
     );
     const totalImpostos = impostosTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
     const lazerTransactions = transactions.filter(
-      (t) => t.category === 'LAZER_E_HOBBIES',
+      (t) => t.category === "LAZER_E_HOBBIES"
     );
     const totalLazer = lazerTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
-<<<<<<< HEAD
     const petsTransactions = transactions.filter((t) => t.category === "PETS");
-=======
-    const petsTransactions = transactions.filter(
-      (t) => t.category === 'PETS',
-    );
->>>>>>> 4f54cf6b5b214967fb8585a1eb299db81fd8bfb4
     const totalPets = petsTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
     const roupasTransactions = transactions.filter(
-      (t) => t.category === 'ROUPAS',
+      (t) => t.category === "ROUPAS"
     );
     const totalRoupas = roupasTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
     const saudeTransactions = transactions.filter(
-      (t) => t.category === 'SAUDE',
+      (t) => t.category === "SAUDE"
     );
     const totalSaude = saudeTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
     const transporteTransactions = transactions.filter(
-      (t) => t.category === 'TRANSPORTE',
+      (t) => t.category === "TRANSPORTE"
     );
     const totalTransporte = transporteTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
     const outrosTransactions = transactions.filter(
-<<<<<<< HEAD
       (t) => t.category === "OUTROS" && t.flow === "OUT"
-=======
-      (t) => t.category === 'OUTROS' && t.flow === 'OUT',
->>>>>>> 4f54cf6b5b214967fb8585a1eb299db81fd8bfb4
     );
     const totalOutros = outrosTransactions.reduce(
       (total, cur) => total + cur.value,
-      0,
+      0
     );
 
     setOutCategoryChartData([
@@ -218,7 +198,7 @@ const Report = () => {
           options={{
             tooltips: {
               enabled: true,
-              mode: 'single',
+              mode: "single",
               callbacks: {
                 label(tooltipItems, data) {
                   return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
@@ -227,16 +207,16 @@ const Report = () => {
             },
           }}
           data={() => ({
-            labels: ['Entrada', 'Saída'],
+            labels: ["Entrada", "Saída"],
             datasets: [
               {
-                label: '# de Fluxo',
+                label: "# de Fluxo",
                 data: flowChartData,
                 backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
                 ],
-                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+                borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
                 borderWidth: 1,
               },
             ],
@@ -246,7 +226,7 @@ const Report = () => {
           options={{
             tooltips: {
               enabled: true,
-              mode: 'single',
+              mode: "single",
               callbacks: {
                 label(tooltipItems, data) {
                   return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
@@ -255,28 +235,24 @@ const Report = () => {
             },
           }}
           data={() => ({
-            labels: ['Salário', 'Investimentos', 'Empréstimo', 'Outros'],
+            labels: ["Salário", "Investimentos", "Empréstimo", "Outros"],
             datasets: [
               {
-                label: '# de Categoria de Entradas',
+                label: "# de Categoria de Entradas",
                 data: inCategoryChartData,
                 // data: [30,50,20,100],
                 backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)',
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(255, 159, 64, 0.2)",
                 ],
-<<<<<<< HEAD
                 borderColor: [
                   "rgba(255, 99, 132, 1)",
                   "rgba(54, 162, 235, 1)",
                   "rgba(153, 102, 255, 1)",
                   "rgba(255, 159, 64, 1)",
                 ],
-=======
-                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
->>>>>>> 4f54cf6b5b214967fb8585a1eb299db81fd8bfb4
                 borderWidth: 1,
               },
             ],
@@ -286,7 +262,7 @@ const Report = () => {
           options={{
             tooltips: {
               enabled: true,
-              mode: 'single',
+              mode: "single",
               callbacks: {
                 label(tooltipItems, data) {
                   return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
@@ -295,7 +271,6 @@ const Report = () => {
             },
           }}
           data={() => ({
-<<<<<<< HEAD
             labels: [
               "Alimentação",
               "Assinaturas",
@@ -308,37 +283,34 @@ const Report = () => {
               "Transporte",
               "Outros",
             ],
-=======
-            labels: ['Alimentação', 'Assinaturas', 'Educação', 'Impostos', 'Lazer', 'Pets', 'Roupas', 'Saude', 'Transporte', 'Outros'],
->>>>>>> 4f54cf6b5b214967fb8585a1eb299db81fd8bfb4
             datasets: [
               {
-                label: '# de Categoria de Saídas',
+                label: "# de Categoria de Saídas",
                 data: outCategoryChartData,
                 // data: [1,2,3,4,5,6,7,8,9,10],
                 backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 206, 86, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(255, 159, 64, 0.2)",
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 206, 86, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
                 ],
                 borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)',
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
                 ],
                 borderWidth: 1,
               },
