@@ -11,6 +11,19 @@
   justify-content: space-around;
 }
 
+#loading-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#loading-container .spinner-border {
+  width: 80px;
+  height: 80px;
+}
+
 #welcome-message,
 #latest-transactions {
   border: 1px solid #bbb;
