@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
-import Table from 'react-bootstrap/Table';
-import Row from 'react-bootstrap/Row';
-import Spinner from 'react-bootstrap/Spinner';
+import React, { useState, useEffect } from "react";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Table from "react-bootstrap/Table";
+import Row from "react-bootstrap/Row";
+import Spinner from "react-bootstrap/Spinner";
 
-import './styles.css';
-import api from '../../services/api';
-import { getUserData } from '../../services/auth';
-import categoryParser from '../../utils/categoryParser';
-import thanosMeme from '../../img/thanos.jpg';
+import "./styles.css";
+import api from "../../services/api";
+import { getUserData } from "../../services/auth";
+import categoryParser from "../../utils/categoryParser";
+import thanosMeme from "../../img/thanos.jpg";
 
 const Show = () => {
   const [transactions, setTransactions] = useState([]);
@@ -22,30 +22,24 @@ const Show = () => {
 
         setTransactions(response.data || []);
       } catch (err) {
-        console.log('ERROR GET TRANSACTIONS');
+        console.log("ERROR GET TRANSACTIONS");
       }
     };
 
     fetchData();
   }, [userId]);
 
-  const createTableRows = () => transactions
-    .reverse()
-    .slice(0, 10)
-    .map((transaction) => (
+  const createTableRows = () =>
+    transactions.slice(0, 10).map((transaction) => (
       <tr
         key={transaction.id}
         style={
-            transaction.flow === 'IN'
-              ? { backgroundColor: '#e2f5ee', color: '#1fab89' }
-              : { backgroundColor: '#fae9e8', color: '#ff322b' }
-          }
+          transaction.flow === "IN"
+            ? { backgroundColor: "#e2f5ee", color: "#1fab89" }
+            : { backgroundColor: "#fae9e8", color: "#ff322b" }
+        }
       >
-        <td>
-          R$
-          {' '}
-          {transaction.value}
-        </td>
+        <td>R$ {transaction.value}</td>
         <td>{transaction.description}</td>
         <td>{categoryParser(transaction.category)}</td>
       </tr>
@@ -54,31 +48,33 @@ const Show = () => {
   const calculateSpending = () => {
     const lastTenTransactions = transactions.reverse().slice(0, 10);
 
+    console.log(lastTenTransactions);
+
     let inSum = 0;
     let outSum = 0;
     const categoriesIn = {};
     const categoriesOut = {};
     lastTenTransactions.forEach((transaction) => {
-      if (transaction.flow === 'IN') {
+      if (transaction.flow === "IN") {
         inSum += transaction.value;
         const categoryValue = categoriesIn[transaction.category] || 0;
         categoriesIn[transaction.category] = categoryValue + transaction.value;
       }
 
-      if (transaction.flow === 'OUT') {
+      if (transaction.flow === "OUT") {
         outSum += transaction.value;
-        const categoryValue = (categoriesOut[transaction.category] || 0);
+        const categoryValue = categoriesOut[transaction.category] || 0;
         categoriesOut[transaction.category] = categoryValue + transaction.value;
       }
     });
 
     console.log(inSum, outSum, lastTenTransactions);
 
-    const topCategoryIn = Object.keys(categoriesIn).reduce(
-      (a, b) => (categoriesIn[a] > categoriesIn[b] ? a : b),
+    const topCategoryIn = Object.keys(categoriesIn).reduce((a, b) =>
+      categoriesIn[a] > categoriesIn[b] ? a : b
     );
-    const topCategoryOut = Object.keys(categoriesOut).reduce(
-      (a, b) => (categoriesOut[a] > categoriesOut[b] ? a : b),
+    const topCategoryOut = Object.keys(categoriesOut).reduce((a, b) =>
+      categoriesOut[a] > categoriesOut[b] ? a : b
     );
 
     return (
@@ -87,32 +83,28 @@ const Show = () => {
         <h4>
           <span role="img" aria-label="money-flying">
             💸
-          </span>
-          {' '}
-          Gastou R$
-          {' '}
-          {outSum}
+          </span>{" "}
+          Gastou R$ {outSum}
         </h4>
         <h6>
-          A categoria em que mais gastou foi
-          {' '}
-          <span className="font-weight-bold">{categoryParser(topCategoryOut)}</span>
+          A categoria em que mais gastou foi{" "}
+          <span className="font-weight-bold">
+            {categoryParser(topCategoryOut)}
+          </span>
           !
         </h6>
         <br />
         <h4>
           <span role="img" aria-label="money-flying">
             💰
-          </span>
-          {' '}
-          Recebeu R$
-          {' '}
-          {inSum}
+          </span>{" "}
+          Recebeu R$ {inSum}
         </h4>
         <h6>
-          A categoria em que mais recebeu foi
-          {' '}
-          <span className="font-weight-bold">{categoryParser(topCategoryIn)}</span>
+          A categoria em que mais recebeu foi{" "}
+          <span className="font-weight-bold">
+            {categoryParser(topCategoryIn)}
+          </span>
           !
         </h6>
         <br />
@@ -120,12 +112,10 @@ const Show = () => {
         {inSum > outSum && (
           <>
             <h3>
-              Parabéns!
-              {' '}
+              Parabéns!{" "}
               <span role="img" aria-label="confetti">
                 🎉
-              </span>
-              {' '}
+              </span>{" "}
             </h3>
             <h5>Você tem recebido mais do que gasto. Continue assim!</h5>
           </>
@@ -134,12 +124,10 @@ const Show = () => {
         {outSum > inSum && (
           <>
             <h3>
-              Cuidado!
-              {' '}
+              Cuidado!{" "}
               <span role="img" aria-label="warning-sign">
                 ⚠️
-              </span>
-              {' '}
+              </span>{" "}
             </h3>
             <h5>
               Você tem gasto mais do que recebido. Tente controlar mais os seus
@@ -173,12 +161,7 @@ const Show = () => {
     <Container fluid id="show-container">
       <Row noGutters className="align-items-center">
         <Col xs={5} id="welcome-message">
-          <h1>
-            Olá,
-            {' '}
-            {name}
-            ! 👋
-          </h1>
+          <h1>Olá, {name}! 👋</h1>
           <br />
           <h3>Nas suas últimas dez transações, percebi que você...</h3>
           {calculateSpending()}
