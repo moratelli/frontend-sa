@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Row } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import { Bar, Pie, HorizontalBar } from "react-chartjs-2";
 import api from "../../services/api";
@@ -194,6 +195,8 @@ const Report = () => {
       <h1>Relatórios</h1>
       <br />
       <div>
+        <div>
+
         <Pie
           options={{
             tooltips: {
@@ -258,6 +261,8 @@ const Report = () => {
             ],
           })}
         />
+        </div>
+        <div>
         <HorizontalBar
           options={{
             tooltips: {
@@ -318,6 +323,7 @@ const Report = () => {
           })}
         />
         {/* <Line width={100} height={50} data={data} /> */}
+        </div>
       </div>
     </Container>
   );
