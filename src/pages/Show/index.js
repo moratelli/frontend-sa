@@ -37,7 +37,7 @@ const Show = () => {
     };
 
     fetchData();
-  }, [userId, currentPage]);
+  }, [userId, currentPage, itemsPerPage, lastTenTransactions]);
 
   const createTableRows = () => transactions.map((transaction) => (
     <tr
