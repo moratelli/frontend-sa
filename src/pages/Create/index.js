@@ -59,7 +59,7 @@ const Create = () => {
     { value: "ALIMENTACAO", label: "Alimentação" },
     { value: "ASSINATURAS_E_SERVICOS", label: "Assinaturas e serviços" },
     { value: "EDUCACAO", label: "Educação" },
-    { value: "IMPOSTOS_E_ETAXAS", label: "Impostos e taxas" },
+    { value: "IMPOSTOS_E_TAXAS", label: "Impostos e taxas" },
     { value: "LAZER_E_HOBBIES", label: "Lazer e hobbies" },
     { value: "PETS", label: "Pets" },
     { value: "ROUPAS", label: "Roupas" },
