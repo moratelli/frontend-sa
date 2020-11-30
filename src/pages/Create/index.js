@@ -61,6 +61,7 @@ const Create = () => {
     { value: "EDUCACAO", label: "Educação" },
     { value: "IMPOSTOS_E_TAXAS", label: "Impostos e taxas" },
     { value: "LAZER_E_HOBBIES", label: "Lazer e hobbies" },
+    { value: "MORADIA", label: "Moradia" },
     { value: "PETS", label: "Pets" },
     { value: "ROUPAS", label: "Roupas" },
     { value: "SAUDE", label: "Saúde" },
