@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Row } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import { Bar, Pie, HorizontalBar } from "react-chartjs-2";
 import api from "../../services/api";
@@ -76,7 +77,7 @@ const Report = () => {
       0,
     );
     const investimentosTransactions = transactions.filter(
-      (t) => t.category === "INVESTIMENTOS",
+      (t) => t.category === "INVESTIMENTO",
     );
     const totalInvestimentos = investimentosTransactions.reduce(
       (total, cur) => total + cur.value,
@@ -191,11 +192,10 @@ const Report = () => {
 
   return (
     <Container fluid id="report-container">
-      <h1>Relatórios</h1>
-      <br />
-      <div>
-        <div>
-
+      <div id="page-content-wrapper" class="col-10">
+        <h1>Relatórios</h1>
+        <br />
+        <div class="col-8">
           <Pie
             options={{
               tooltips: {
@@ -224,6 +224,9 @@ const Report = () => {
               ],
             })}
           />
+        </div>
+        <Row>
+        <div class="col-6">
           <Bar
             options={{
               tooltips: {
@@ -261,7 +264,8 @@ const Report = () => {
             })}
           />
         </div>
-        <div>
+
+        <div class="col-6">
           <HorizontalBar
             options={{
               tooltips: {
@@ -321,8 +325,11 @@ const Report = () => {
               ],
             })}
           />
+
           {/* <Line width={100} height={50} data={data} /> */}
-        </div>
+          </div>
+          </Row>
+
       </div>
     </Container>
   );
