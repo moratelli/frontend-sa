@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from 'react-router-dom';
+} from "react-router-dom";
 
-import './App.css';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import Report from './pages/Report';
-import { isAuthenticated } from './services/auth';
+import "./App.css";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import Report from "./pages/Report";
+import { isAuthenticated } from "./services/auth";
 
 const App = () => (
   <Router>
@@ -28,10 +28,10 @@ const App = () => (
         </Route>
         <Route
           path="/dashboard"
-          render={(props) => (
+          render={() => (
             isAuthenticated()
               ? <Dashboard />
-              : <Redirect to={{ pathname: '/', state: { missingAuth: true } }} />
+              : <Redirect to={{ pathname: "/", state: { missingAuth: true } }} />
           )}
         />
       </Switch>

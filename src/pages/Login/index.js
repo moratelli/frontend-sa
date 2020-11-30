@@ -68,7 +68,7 @@ const Login = () => {
   return (
     <Container fluid id="login-container">
       <Row noGutters className="h-100 align-items-center">
-        <Col md="7"></Col>
+        <Col md="7" />
         <Col md="5">
           <section id="login-box" className="text-center col-md-6 mx-auto">
             <header className="mb-5">

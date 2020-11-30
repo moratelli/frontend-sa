@@ -1,41 +1,41 @@
-import React from 'react';
+import React from "react";
 import {
   useHistory,
   useLocation,
-} from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+} from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-import './styles.css';
-import Sidebar from '../../components/Sidebar/index';
-import Profile from '../Profile';
-import Show from '../Show';
-import Create from '../Create';
-import Report from '../Report';
+import "./styles.css";
+import Sidebar from "../../components/Sidebar/index";
+import Profile from "../Profile";
+import Show from "../Show";
+import Create from "../Create";
+import Report from "../Report";
 
 const Dashboard = () => {
   const history = useHistory();
   const location = useLocation();
-  const [path] = location.search.split('=');
+  const [path] = location.search.split("=");
 
   let content;
 
   switch (path) {
-    case '?profile':
+    case "?profile":
       content = <Profile />;
       break;
-    case '?show':
+    case "?show":
       content = <Show />;
       break;
-    case '?create':
+    case "?create":
       content = <Create />;
       break;
-    case '?report':
+    case "?report":
       content = <Report />;
       break;
     default:
-      history.push({ pathname: '/dashboard', search: '?show' });
+      history.push({ pathname: "/dashboard", search: "?show" });
   }
 
   return (

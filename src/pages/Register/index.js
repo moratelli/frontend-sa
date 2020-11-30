@@ -33,8 +33,7 @@ const Register = () => {
 
     if ((password || confirmPassword) && password !== confirmPassword) {
       setShowError(true);
-      setErrorMessage("As duas senhas devem ser iguais!");
-      return;
+      return setErrorMessage("As duas senhas devem ser iguais!");
     }
 
     try {
@@ -49,11 +48,11 @@ const Register = () => {
       const { message } = response.data;
 
       setValidated(true);
-      history.push({ pathname: "/", state: { successMessage: message } });
+      return history.push({ pathname: "/", state: { successMessage: message } });
     } catch (err) {
       setValidated(false);
       setShowError(true);
-      setErrorMessage("O e-mail informado já está em uso!");
+      return setErrorMessage("O e-mail informado já está em uso!");
     }
   };
 

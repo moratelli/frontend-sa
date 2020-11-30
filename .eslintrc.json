@@ -20,6 +20,7 @@
     "import"
   ],
   "rules": {
+    "quotes": [2, "double"],
     "react/jsx-filename-extension": [
       "error",
       {

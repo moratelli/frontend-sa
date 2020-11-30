@@ -106,7 +106,7 @@ const Create = () => {
           </div>
         </Collapse>
         <h1>Editar perfil</h1>
-        <br></br>
+        <br />
         <Form id="create-form" onSubmit={handleFormSubmit}>
           <Form.Group>
             <Form.Label>Nome</Form.Label>
