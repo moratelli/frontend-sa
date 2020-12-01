@@ -1,44 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
-import { Bar, Pie, HorizontalBar } from "react-chartjs-2";
+import { Bar, Pie, HorizontalBar, Line } from "react-chartjs-2";
 import api from "../../services/api";
 import { getUserData } from "../../services/auth";
 
 import "./styles.css";
-
-// const data = {
-//   labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-//   datasets: [
-//     {
-//       label: "# of Votes",
-//       data: [12, 19, 3, 5, 2, 3],
-//       backgroundColor: [
-//         "rgba(255, 99, 132, 0.2)",
-//         "rgba(54, 162, 235, 0.2)",
-//         "rgba(255, 206, 86, 0.2)",
-//         "rgba(75, 192, 192, 0.2)",
-//         "rgba(153, 102, 255, 0.2)",
-//         "rgba(255, 159, 64, 0.2)",
-//       ],
-//       borderColor: [
-//         "rgba(255, 99, 132, 1)",
-//         "rgba(54, 162, 235, 1)",
-//         "rgba(255, 206, 86, 1)",
-//         "rgba(75, 192, 192, 1)",
-//         "rgba(153, 102, 255, 1)",
-//         "rgba(255, 159, 64, 1)",
-//       ],
-//       borderWidth: 1,
-//     },
-//   ],
-// };
 
 const Report = () => {
   const [transactions, setTransactions] = useState([]);
   const [flowChartData, setFlowChartData] = useState([]);
   const [inCategoryChartData, setInCategoryChartData] = useState([]);
   const [outCategoryChartData, setOutCategoryChartData] = useState([]);
+  const [datetimeChartData, setDatetimeChartData] = useState([]);
   const { userId } = getUserData();
 
   useEffect(() => {
@@ -66,6 +40,16 @@ const Report = () => {
     );
 
     setFlowChartData([totalIn, totalOut]);
+  }, [transactions]);
+
+  useEffect(() => {
+    const inDateTransactions = transactions.filter((t) => t.flow === "IN");
+    const totalInDate = new Date(inDateTransactions.createdAt).toLocaleDateString()
+
+    const outDateTransactions = transactions.filter((t) => t.flow === "OUT");
+    const totalOutDate = new Date(outDateTransactions.createdAt).toLocaleDateString()
+
+    setDatetimeChartData([totalInDate, totalOutDate]);
   }, [transactions]);
 
   useEffect(() => {
@@ -142,6 +126,13 @@ const Report = () => {
       (total, cur) => total + cur.value,
       0,
     );
+    const moradiaTransactions = transactions.filter(
+      (t) => t.category === "MORADIA",
+    );
+    const totalMoradia = moradiaTransactions.reduce(
+      (total, cur) => total + cur.value,
+      0,
+    );
     const petsTransactions = transactions.filter((t) => t.category === "PETS");
     const totalPets = petsTransactions.reduce(
       (total, cur) => total + cur.value,
@@ -182,6 +173,7 @@ const Report = () => {
       totalEducacao,
       totalImpostos,
       totalLazer,
+      totalMoradia,
       totalPets,
       totalRoupas,
       totalSaude,
@@ -194,8 +186,9 @@ const Report = () => {
     <Container fluid id="report-container">
       <div id="page-content-wrapper" class="col-10">
         <h1>Relatórios</h1>
-        <br />
-        <div class="col-8">
+        <br/>
+        <Row>
+        <div class="col-4">
           <Pie
             options={{
               tooltips: {
@@ -225,6 +218,37 @@ const Report = () => {
             })}
           />
         </div>
+        <div class="col-8">
+          <Line
+            options={{
+              tooltips: {
+                enabled: true,
+                mode: "single",
+                callbacks: {
+                  label(tooltipItems, data) {
+                    return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
+                  },
+                },
+              },
+            }}
+            data={() => ({
+              labels: ["Entrada", "Saída"],
+              datasets: [
+                {
+                  label: "# de Fluxo",
+                  data: datetimeChartData,
+                  backgroundColor: [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(54, 162, 235, 0.2)",
+                  ],
+                  borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+                  borderWidth: 1,
+                },
+              ],
+            })}
+          />
+        </div>
+        </Row>
         <Row>
         <div class="col-6">
           <Bar
@@ -285,6 +309,7 @@ const Report = () => {
                 "Educação",
                 "Impostos",
                 "Lazer",
+                "Moradia",
                 "Pets",
                 "Roupas",
                 "Saude",
@@ -307,6 +332,7 @@ const Report = () => {
                     "rgba(54, 162, 235, 0.2)",
                     "rgba(255, 206, 86, 0.2)",
                     "rgba(75, 192, 192, 0.2)",
+                    "rgba(153, 102, 255, 0.2)",
                   ],
                   borderColor: [
                     "rgba(255, 99, 132, 1)",
@@ -319,17 +345,15 @@ const Report = () => {
                     "rgba(54, 162, 235, 1)",
                     "rgba(255, 206, 86, 1)",
                     "rgba(75, 192, 192, 1)",
+                    "rgba(153, 102, 255, 1)",
                   ],
                   borderWidth: 1,
                 },
               ],
             })}
           />
-
-          {/* <Line width={100} height={50} data={data} /> */}
           </div>
-          </Row>
-
+        </Row>
       </div>
     </Container>
   );
