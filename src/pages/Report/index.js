@@ -44,10 +44,10 @@ const Report = () => {
 
   useEffect(() => {
     const inDateTransactions = transactions.filter((t) => t.flow === "IN");
-    const totalInDate = new Date(inDateTransactions.createdAt).toLocaleDateString()
+    const totalInDate = inDateTransactions.reduce((total, cur) => total + new Date(cur.createdAt).toLocaleDateString(), 0)
 
     const outDateTransactions = transactions.filter((t) => t.flow === "OUT");
-    const totalOutDate = new Date(outDateTransactions.createdAt).toLocaleDateString()
+    const totalOutDate = outDateTransactions.reduce((total, cur) => total + new Date(cur.createdAt).toLocaleDateString(), 0)
 
     setDatetimeChartData([totalInDate, totalOutDate]);
   }, [transactions]);
@@ -210,7 +210,7 @@ const Report = () => {
                     {
                       type: 'linear',
                       display: true,
-                      position: 'right',
+                      position: 'left',
                       id: 'y-axis-2',
                       gridLines: {
                         drawOnArea: false,
