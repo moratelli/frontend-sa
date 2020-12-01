@@ -199,6 +199,25 @@ const Report = () => {
                     return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
                   },
                 },
+                scales: {
+                  yAxes: [
+                    {
+                      type: 'linear',
+                      display: true,
+                      position: 'left',
+                      id: 'y-axis-1',
+                    },
+                    {
+                      type: 'linear',
+                      display: true,
+                      position: 'right',
+                      id: 'y-axis-2',
+                      gridLines: {
+                        drawOnArea: false,
+                      },
+                    },
+                  ],
+                }
               },
             }}
             data={() => ({
@@ -213,6 +232,7 @@ const Report = () => {
                   ],
                   borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
                   borderWidth: 1,
+                  yAxisID:['y-axis-1','y-axis-2']
                 },
               ],
             })}
