@@ -40,3 +40,17 @@
 #latest-transactions > div > table > tbody > tr:hover {
   filter: brightness(97%);
 }
+
+.menu-icon {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.td-icon:active {
+  filter: opacity(40%);
+}

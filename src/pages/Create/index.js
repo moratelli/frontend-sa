@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -14,6 +14,8 @@ import { getUserData } from "../../services/auth";
 
 const Create = () => {
   const history = useHistory();
+  const location = useLocation();
+  const [path, transactionId] = location.search.split("=");
   const [value, setValue] = useState();
   const [flow, setFlow] = useState("IN");
   const [category, setCategory] = useState("");
@@ -22,12 +24,48 @@ const Create = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const { userId } = getUserData();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(`/api/users/${userId}/transactions/${transactionId}`);
+
+        setValue(response.data.value);
+        setFlow(response.data.flow);
+        setCategory(response.data.category);
+        setDescription(response.data.description);
+      } catch (err) {
+        console.log("ERROR GET TRANSACTION");
+      }
+    };
+
+    if (transactionId) {
+      fetchData();
+    }
+  }, []);
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     if (!value || !flow || !description || !category) {
       setShowError(true);
       setErrorMessage("Preencha todos os campos para continuar!");
+    } else if (transactionId) {
+      try {
+        const response = await api.put(`/api/transactions/${transactionId}`, {
+          description,
+          flow,
+          value,
+          category,
+          user: { id: userId },
+        });
+
+        if (response.data.id) {
+          history.push("/dashboard?show");
+        }
+      } catch (err) {
+        setShowError(true);
+        setErrorMessage("Ocorreu um erro ao atualizar sua transação!");
+      }
     } else {
       try {
         const response = await api.post("/api/transactions", {
@@ -83,7 +121,11 @@ const Create = () => {
             </Alert>
           </div>
         </Collapse>
-        <h1>Criar transação</h1>
+        <h1>
+          {transactionId ? "Editar" : "Criar"}
+          {" "}
+          transação
+        </h1>
         <br />
         <Form id="create-form" onSubmit={handleFormSubmit}>
           <Form.Group>
@@ -157,7 +199,7 @@ const Create = () => {
           </Form.Group>
           <Form.Row>
             <Button id="create-button" type="submit">
-              Criar
+              {transactionId ? "Salvar" : "Criar"}
             </Button>
           </Form.Row>
         </Form>

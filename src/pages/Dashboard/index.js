@@ -29,6 +29,7 @@ const Dashboard = () => {
       content = <Show />;
       break;
     case "?create":
+    case "?edit":
       content = <Create />;
       break;
     case "?report":
