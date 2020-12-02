@@ -17,7 +17,6 @@ import {
   faBars, faTrashAlt, faPencilAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 
 import "./styles.css";
 import api from "../../services/api";
@@ -26,7 +25,6 @@ import categoryParser from "../../utils/categoryParser";
 import thanosMeme from "../../img/thanos.jpg";
 
 const Show = () => {
-  const MySwal = withReactContent(Swal);
   const history = useHistory();
   const [transactions, setTransactions] = useState([]);
   const [lastTenTransactions, setLastTenTransactions] = useState([]);

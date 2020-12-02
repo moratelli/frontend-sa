@@ -41,7 +41,7 @@ const Create = () => {
     if (transactionId) {
       fetchData();
     }
-  }, []);
+  }, [transactionId, userId]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
