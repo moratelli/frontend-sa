@@ -15,7 +15,7 @@ import { getUserData } from "../../services/auth";
 const Create = () => {
   const history = useHistory();
   const location = useLocation();
-  const [path, transactionId] = location.search.split("=");
+  const [, transactionId] = location.search.split("=");
   const [value, setValue] = useState();
   const [flow, setFlow] = useState("IN");
   const [category, setCategory] = useState("");
