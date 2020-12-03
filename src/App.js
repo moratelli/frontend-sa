@@ -15,7 +15,7 @@ import { isAuthenticated } from './services/auth';
 
 const App = () => {
   useEffect(() => {
-    document.title = 'POUP - Controle seus gastos';
+    document.title = 'POUP';
   }, []);
   return (
     <Router>
