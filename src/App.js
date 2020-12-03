@@ -1,21 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from "react-router-dom";
+} from 'react-router-dom';
 
-import "./App.css";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import Report from "./pages/Report";
-import { isAuthenticated } from "./services/auth";
+import './App.css';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import Report from './pages/Report';
+import { isAuthenticated } from './services/auth';
 
 const App = () => {
   useEffect(() => {
-    document.title = "Poup";
+    document.title = 'POUP - Controle seus gastos';
   }, []);
   return (
     <Router>
@@ -32,11 +32,15 @@ const App = () => {
           </Route>
           <Route
             path="/dashboard"
-            render={() => (
-              isAuthenticated()
-                ? <Dashboard />
-                : <Redirect to={{ pathname: "/", state: { missingAuth: true } }} />
-            )}
+            render={() =>
+              isAuthenticated() ? (
+                <Dashboard />
+              ) : (
+                <Redirect
+                  to={{ pathname: '/', state: { missingAuth: true } }}
+                />
+              )
+            }
           />
         </Switch>
       </div>
