@@ -46,8 +46,6 @@ const Report = () => {
 
   useEffect(() => {
     console.log('trans', transactions);
-    //  const sumIn = {};
-    //  const sumOut = {};
     const sumInArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     const sumOutArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -236,9 +234,6 @@ const Report = () => {
                         display: true,
                         position: 'left',
                         id: 'y-axis-2',
-                        gridLines: {
-                          drawOnArea: false,
-                        },
                       },
                     ],
                   },
@@ -251,12 +246,12 @@ const Report = () => {
                     label: '# de Fluxo',
                     data: flowChartData,
                     backgroundColor: [
+                      'rgb(31, 171, 137, 0.2)',
                       'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
                     ],
                     borderColor: [
+                      'rgb(31, 171, 137, 1)',
                       'rgba(255, 99, 132, 1)',
-                      'rgba(54, 162, 235, 1)',
                     ],
                     borderWidth: 1,
                     yAxisID: ['y-axis-1', 'y-axis-2'],
@@ -280,8 +275,7 @@ const Report = () => {
                       }`;
                     },
                   },
-                },
-                scales: {
+                  scales: {
                   yAxes: [
                     {
                       ticks: {
@@ -290,6 +284,8 @@ const Report = () => {
                     },
                   ],
                 },
+                },
+
               }}
               data={() => ({
                 labels: [
@@ -308,18 +304,18 @@ const Report = () => {
                 ],
                 datasets: [
                   {
-                    label: '# of Votes',
+                    label: 'Entradas',
                     data: datetimeInChartData,
                     fill: false,
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgba(255, 99, 132)',
+                    backgroundColor: 'rgb(31, 171, 137, 1)',
+                    borderColor: 'rgb(31, 171, 137, 1)',
                   },
                   {
-                    label: '# of Vote',
+                    label: 'Saídas',
                     data: datetimeOutChartData,
                     fill: false,
-                    backgroundColor: 'rgba(54, 162, 235, 1)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(255, 99, 132,1)',
+                    borderColor: 'rgba(255, 99, 132,1)',
                   },
                 ],
               })}
@@ -338,13 +334,22 @@ const Report = () => {
                       return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
                     },
                   },
+                  scales: {
+                    xAxes: [
+                      {
+                        type: 'category',
+                        labels: ['Salário', 'Investimentos', 'Empréstimo', 'Outros'],
+                      },
+                    ],
+                  },
                 },
+
               }}
               data={() => ({
                 labels: ['Salário', 'Investimentos', 'Empréstimo', 'Outros'],
                 datasets: [
                   {
-                    label: '# de Categoria de Entradas',
+                    label: 'Categorias de Entradas',
                     data: inCategoryChartData,
                     backgroundColor: [
                       'rgba(255, 99, 132, 0.2)',
@@ -359,6 +364,7 @@ const Report = () => {
                       'rgba(255, 159, 64, 1)',
                     ],
                     borderWidth: 1,
+                    xAxesID: ['x-axis-1', 'x-axis-2'],
                   },
                 ],
               })}
@@ -375,6 +381,26 @@ const Report = () => {
                     label(tooltipItems, data) {
                       return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
                     },
+                  },
+                  scales: {
+                    yAxes: [
+                      {
+                        type: 'category',
+                        labels: [
+                          'Alimentação',
+                          'Assinaturas',
+                          'Educação',
+                          'Impostos',
+                          'Lazer',
+                          'Moradia',
+                          'Pets',
+                          'Roupas',
+                          'Saude',
+                          'Transporte',
+                          'Outros',
+                        ],
+                      },
+                    ],
                   },
                 },
               }}
@@ -394,9 +420,8 @@ const Report = () => {
                 ],
                 datasets: [
                   {
-                    label: '# de Categoria de Saídas',
+                    label: 'Categorias de Saída',
                     data: outCategoryChartData,
-                    // data: [1,2,3,4,5,6,7,8,9,10],
                     backgroundColor: [
                       'rgba(255, 99, 132, 0.2)',
                       'rgba(54, 162, 235, 0.2)',
