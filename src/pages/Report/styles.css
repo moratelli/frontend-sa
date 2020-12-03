@@ -6,3 +6,10 @@
   align-items: space-between;
   justify-content: center;
 }
+
+#report-container > div {
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  padding: 55px 70px;
+  background-color: #f8f9fa;
+}

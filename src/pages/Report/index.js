@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
-import { Bar, Pie, HorizontalBar, Line } from "react-chartjs-2";
+import Col from "react-bootstrap/Col";
+import {
+  Bar, Pie, HorizontalBar, Line,
+} from "react-chartjs-2";
 import api from "../../services/api";
 import { getUserData } from "../../services/auth";
 
@@ -12,7 +15,8 @@ const Report = () => {
   const [flowChartData, setFlowChartData] = useState([]);
   const [inCategoryChartData, setInCategoryChartData] = useState([]);
   const [outCategoryChartData, setOutCategoryChartData] = useState([]);
-  const [datetimeChartData, setDatetimeChartData] = useState([]);
+  const [datetimeInChartData, setDatetimeInChartData] = useState([]);
+  const [datetimeOutChartData, setDatetimeOutChartData] = useState([]);
   const { userId } = getUserData();
 
   useEffect(() => {
@@ -43,13 +47,28 @@ const Report = () => {
   }, [transactions]);
 
   useEffect(() => {
-    const inDateTransactions = transactions.filter((t) => t.flow === "IN");
-    const totalInDate = inDateTransactions.reduce((total, cur) => total + new Date(cur.createdAt).toLocaleDateString(), 0)
+    console.log("trans", transactions);
+    const sumIn = {};
+    const sumOut = {};
+    const sumInArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const sumOutArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    const outDateTransactions = transactions.filter((t) => t.flow === "OUT");
-    const totalOutDate = outDateTransactions.reduce((total, cur) => total + new Date(cur.createdAt).toLocaleDateString(), 0)
+    transactions.forEach((transaction) => {
+      const month = new Date(transaction.createdAt).getMonth();
 
-    setDatetimeChartData([totalInDate, totalOutDate]);
+      if (transaction.flow === "IN") {
+        const monthValue = sumInArray[month] || 0;
+        sumInArray[month] = monthValue + transaction.value;
+      }
+
+      if (transaction.flow === "OUT") {
+        const monthValue = sumOutArray[month] || 0;
+        sumOutArray[month] = monthValue + transaction.value;
+      }
+    });
+
+    setDatetimeInChartData(sumInArray);
+    setDatetimeOutChartData(sumOutArray);
   }, [transactions]);
 
   useEffect(() => {
@@ -184,197 +203,209 @@ const Report = () => {
 
   return (
     <Container fluid id="report-container">
-      <div id="page-content-wrapper" class="col-10">
+      <Col xs={10} style={{ margin: "auto" }}>
         <h1>Relatórios</h1>
-        <br/>
+        <br />
         <Row>
-        <div class="col-4">
-          <Pie
-            options={{
-              tooltips: {
-                enabled: true,
-                mode: "single",
-                callbacks: {
-                  label(tooltipItems, data) {
-                    return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
+          <div className="col-4" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Pie
+              options={{
+                tooltips: {
+                  enabled: true,
+                  mode: "single",
+                  callbacks: {
+                    label(tooltipItems, data) {
+                      return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
+                    },
+                  },
+                  scales: {
+                    yAxes: [
+                      {
+                        type: "linear",
+                        display: true,
+                        position: "left",
+                        id: "y-axis-1",
+                      },
+                      {
+                        type: "linear",
+                        display: true,
+                        position: "left",
+                        id: "y-axis-2",
+                        gridLines: {
+                          drawOnArea: false,
+                        },
+                      },
+                    ],
+                  },
+                },
+              }}
+              data={() => ({
+                labels: ["Entrada", "Saída"],
+                datasets: [
+                  {
+                    label: "# de Fluxo",
+                    data: flowChartData,
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.2)",
+                      "rgba(54, 162, 235, 0.2)",
+                    ],
+                    borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+                    borderWidth: 1,
+                    yAxisID: ["y-axis-1", "y-axis-2"],
+                  },
+                ],
+              })}
+            />
+          </div>
+          <div className="col-8">
+            <Line
+              options={{
+                tooltips: {
+                  enabled: true,
+                  mode: "single",
+                  callbacks: {
+                    label(tooltipItems, data) {
+                      return `R$ ${data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]}`;
+                    },
                   },
                 },
                 scales: {
                   yAxes: [
                     {
-                      type: 'linear',
-                      display: true,
-                      position: 'left',
-                      id: 'y-axis-1',
-                    },
-                    {
-                      type: 'linear',
-                      display: true,
-                      position: 'left',
-                      id: 'y-axis-2',
-                      gridLines: {
-                        drawOnArea: false,
+                      ticks: {
+                        beginAtZero: true,
                       },
                     },
                   ],
-                }
-              },
-            }}
-            data={() => ({
-              labels: ["Entrada", "Saída"],
-              datasets: [
-                {
-                  label: "# de Fluxo",
-                  data: flowChartData,
-                  backgroundColor: [
-                    "rgba(255, 99, 132, 0.2)",
-                    "rgba(54, 162, 235, 0.2)",
-                  ],
-                  borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
-                  borderWidth: 1,
-                  yAxisID:['y-axis-1','y-axis-2']
                 },
-              ],
-            })}
-          />
-        </div>
-        <div class="col-8">
-          <Line
-            options={{
-              tooltips: {
-                enabled: true,
-                mode: "single",
-                callbacks: {
-                  label(tooltipItems, data) {
-                    return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
+              }}
+              data={() => ({
+                labels: ["Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+                datasets: [
+                  {
+                    label: "# of Votes",
+                    data: datetimeInChartData,
+                    fill: false,
+                    backgroundColor: "rgb(255, 99, 132)",
+                    borderColor: "rgba(255, 99, 132)",
                   },
-                },
-              },
-            }}
-            data={() => ({
-              labels: ["Entrada", "Saída"],
-              datasets: [
-                {
-                  label: "# de Fluxo",
-                  data: datetimeChartData,
-                  backgroundColor: [
-                    "rgba(255, 99, 132, 0.2)",
-                    "rgba(54, 162, 235, 0.2)",
-                  ],
-                  borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
-                  borderWidth: 1,
-                },
-              ],
-            })}
-          />
-        </div>
-        </Row>
-        <Row>
-        <div class="col-6">
-          <Bar
-            options={{
-              tooltips: {
-                enabled: true,
-                mode: "single",
-                callbacks: {
-                  label(tooltipItems, data) {
-                    return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
+                  {
+                    label: "# of Vote",
+                    data: datetimeOutChartData,
+                    fill: false,
+                    backgroundColor: "rgba(54, 162, 235, 1)",
+                    borderColor: "rgba(54, 162, 235, 1)",
                   },
-                },
-              },
-            }}
-            data={() => ({
-              labels: ["Salário", "Investimentos", "Empréstimo", "Outros"],
-              datasets: [
-                {
-                  label: "# de Categoria de Entradas",
-                  data: inCategoryChartData,
-                  // data: [30,50,20,100],
-                  backgroundColor: [
-                    "rgba(255, 99, 132, 0.2)",
-                    "rgba(54, 162, 235, 0.2)",
-                    "rgba(153, 102, 255, 0.2)",
-                    "rgba(255, 159, 64, 0.2)",
-                  ],
-                  borderColor: [
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(54, 162, 235, 1)",
-                    "rgba(153, 102, 255, 1)",
-                    "rgba(255, 159, 64, 1)",
-                  ],
-                  borderWidth: 1,
-                },
-              ],
-            })}
-          />
-        </div>
-
-        <div class="col-6">
-          <HorizontalBar
-            options={{
-              tooltips: {
-                enabled: true,
-                mode: "single",
-                callbacks: {
-                  label(tooltipItems, data) {
-                    return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
-                  },
-                },
-              },
-            }}
-            data={() => ({
-              labels: [
-                "Alimentação",
-                "Assinaturas",
-                "Educação",
-                "Impostos",
-                "Lazer",
-                "Moradia",
-                "Pets",
-                "Roupas",
-                "Saude",
-                "Transporte",
-                "Outros",
-              ],
-              datasets: [
-                {
-                  label: "# de Categoria de Saídas",
-                  data: outCategoryChartData,
-                  // data: [1,2,3,4,5,6,7,8,9,10],
-                  backgroundColor: [
-                    "rgba(255, 99, 132, 0.2)",
-                    "rgba(54, 162, 235, 0.2)",
-                    "rgba(255, 206, 86, 0.2)",
-                    "rgba(75, 192, 192, 0.2)",
-                    "rgba(153, 102, 255, 0.2)",
-                    "rgba(255, 159, 64, 0.2)",
-                    "rgba(255, 99, 132, 0.2)",
-                    "rgba(54, 162, 235, 0.2)",
-                    "rgba(255, 206, 86, 0.2)",
-                    "rgba(75, 192, 192, 0.2)",
-                    "rgba(153, 102, 255, 0.2)",
-                  ],
-                  borderColor: [
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(54, 162, 235, 1)",
-                    "rgba(255, 206, 86, 1)",
-                    "rgba(75, 192, 192, 1)",
-                    "rgba(153, 102, 255, 1)",
-                    "rgba(255, 159, 64, 1)",
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(54, 162, 235, 1)",
-                    "rgba(255, 206, 86, 1)",
-                    "rgba(75, 192, 192, 1)",
-                    "rgba(153, 102, 255, 1)",
-                  ],
-                  borderWidth: 1,
-                },
-              ],
-            })}
-          />
+                ],
+              })}
+            />
           </div>
         </Row>
-      </div>
+        <Row>
+          <div className="col-6">
+            <Bar
+              options={{
+                tooltips: {
+                  enabled: true,
+                  mode: "single",
+                  callbacks: {
+                    label(tooltipItems, data) {
+                      return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
+                    },
+                  },
+                },
+              }}
+              data={() => ({
+                labels: ["Salário", "Investimentos", "Empréstimo", "Outros"],
+                datasets: [
+                  {
+                    label: "# de Categoria de Entradas",
+                    data: inCategoryChartData,
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.2)",
+                      "rgba(54, 162, 235, 0.2)",
+                      "rgba(153, 102, 255, 0.2)",
+                      "rgba(255, 159, 64, 0.2)",
+                    ],
+                    borderColor: [
+                      "rgba(255, 99, 132, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(153, 102, 255, 1)",
+                      "rgba(255, 159, 64, 1)",
+                    ],
+                    borderWidth: 1,
+                  },
+                ],
+              })}
+            />
+          </div>
+
+          <div className="col-6">
+            <HorizontalBar
+              options={{
+                tooltips: {
+                  enabled: true,
+                  mode: "single",
+                  callbacks: {
+                    label(tooltipItems, data) {
+                      return `R$ ${data.datasets[0].data[tooltipItems.index]}`;
+                    },
+                  },
+                },
+              }}
+              data={() => ({
+                labels: [
+                  "Alimentação",
+                  "Assinaturas",
+                  "Educação",
+                  "Impostos",
+                  "Lazer",
+                  "Moradia",
+                  "Pets",
+                  "Roupas",
+                  "Saude",
+                  "Transporte",
+                  "Outros",
+                ],
+                datasets: [
+                  {
+                    label: "# de Categoria de Saídas",
+                    data: outCategoryChartData,
+                    // data: [1,2,3,4,5,6,7,8,9,10],
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.2)",
+                      "rgba(54, 162, 235, 0.2)",
+                      "rgba(255, 206, 86, 0.2)",
+                      "rgba(75, 192, 192, 0.2)",
+                      "rgba(153, 102, 255, 0.2)",
+                      "rgba(255, 159, 64, 0.2)",
+                      "rgba(255, 99, 132, 0.2)",
+                      "rgba(54, 162, 235, 0.2)",
+                      "rgba(255, 206, 86, 0.2)",
+                      "rgba(75, 192, 192, 0.2)",
+                      "rgba(153, 102, 255, 0.2)",
+                    ],
+                    borderColor: [
+                      "rgba(255, 99, 132, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                      "rgba(75, 192, 192, 1)",
+                      "rgba(153, 102, 255, 1)",
+                      "rgba(255, 159, 64, 1)",
+                      "rgba(255, 99, 132, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                      "rgba(75, 192, 192, 1)",
+                      "rgba(153, 102, 255, 1)",
+                    ],
+                    borderWidth: 1,
+                  },
+                ],
+              })}
+            />
+          </div>
+        </Row>
+      </Col>
     </Container>
   );
 };

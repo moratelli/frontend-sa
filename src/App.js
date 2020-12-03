@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,30 +13,35 @@ import Dashboard from "./pages/Dashboard";
 import Report from "./pages/Report";
 import { isAuthenticated } from "./services/auth";
 
-const App = () => (
-  <Router>
-    <div>
-      <Switch>
-        <Route exact path="/">
-          <Login />
-        </Route>
-        <Route path="/register">
-          <Register />
-        </Route>
-        <Route path="/report">
-          <Report />
-        </Route>
-        <Route
-          path="/dashboard"
-          render={() => (
-            isAuthenticated()
-              ? <Dashboard />
-              : <Redirect to={{ pathname: "/", state: { missingAuth: true } }} />
-          )}
-        />
-      </Switch>
-    </div>
-  </Router>
-);
+const App = () => {
+  useEffect(() => {
+    document.title = "Poup";
+  }, []);
+  return (
+    <Router>
+      <div>
+        <Switch>
+          <Route exact path="/">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/report">
+            <Report />
+          </Route>
+          <Route
+            path="/dashboard"
+            render={() => (
+              isAuthenticated()
+                ? <Dashboard />
+                : <Redirect to={{ pathname: "/", state: { missingAuth: true } }} />
+            )}
+          />
+        </Switch>
+      </div>
+    </Router>
+  );
+};
 
 export default App;
