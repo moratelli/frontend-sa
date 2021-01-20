@@ -1,4 +1,5 @@
-# Poup
+
+<br /><p align="center"><a href="https://poup-app.netlify.app"><img src="./src/img/poup-logo-no-shadow.png"></a></p><br />
 
 A personal expenses tracker made with React. It features a sleek dashboard, where it is possible to track the latest transactions and get a simple feedback based on the user's latest 10 transactions. Poup also has charts, where users can see exactly how their money is spent. Lastly, it also has fully automated end-to-end tests, made with Cypress.
 
