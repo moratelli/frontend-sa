@@ -4,7 +4,7 @@ A personal expenses tracker made with React. It features a sleek dashboard, wher
 
 Poup is the final project of SENAI'S 2019 "Systems Development" course. It was made by Pedro Moratelli, Arthur Felix and Thiago Panchiniak.
 
-You can find Poup's backend here.
+You can find Poup's backend [here](https://github.com/ArthurUFelix/api-sa).
 
 ## Demo
 
@@ -29,7 +29,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Testing
 
-This project features fully automated frontend end-to-end tests, made with Cypress!
+This project features fully automated frontend end-to-end tests, made with [Cypress](https://cypress.io)!
 
 In the project directory, run `yarn start`. This will run the app in the development mode.
 
